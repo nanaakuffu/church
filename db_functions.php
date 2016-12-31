@@ -274,8 +274,31 @@
 
     function members_summary($connection, $table, $group_by)
     {
-      $sql = "SELECT Status, COUNT($group_by) AS Total FROM $table GROUP BY $group_by";
+      $sql = "SELECT Status, COUNT($group_by) AS Members FROM $table GROUP BY $group_by";
       $result = mysqli_query($connection, $sql);
+      $result_number = mysqli_num_rows($result);
+      $rows = [];
+
+      if ($result_number > 0) {
+        while ($record = mysqli_fetch_assoc($result)) {
+          $rows[] = $record;
+        }
+        return $rows;
+      } else {
+        return $rows;
+      }
+    }
+
+    function get_monthly_birthdays($connection)
+    {
+      $month_stamp = date('m', time());
+
+      $sql = "SELECT first_name, last_name, status, date_of_birth FROM members WHERE ";
+      $sql .= "MONTH(date_of_birth) = {$month_stamp} ORDER BY DAY(date_of_birth) ASC";
+
+      $result = mysqli_query($connection, $sql);
+      $records = mysqli_num_rows($result);
+
       $result_number = mysqli_num_rows($result);
       $rows = [];
 
