@@ -92,7 +92,7 @@
                         <ul class='dropdown-menu'>
                             <li>";
                             // if ($_SESSION['is_admin'] == 1 or $_SESSION['is_head'] == 1) {
-                                echo "<a href='create_users.php'><i class='fa fa-fw fa-user'></i> Add New User </a>";
+                                echo "<a href='users_page.php'><i class='fa fa-fw fa-user'></i> Add New User </a>";
                             // }
                       echo "</li>
                             <li>";

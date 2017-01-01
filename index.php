@@ -40,9 +40,9 @@
                       }
                       echo "</tr>";
                     }
-                    echo "<tr>
-                            <td style='font-weight:bold'> Total </td>
-                            <td style='font-weight:bold; text-indent:20px'>", $total , "</td>
+                    echo "<tr class='w3-blue'>
+                            <th style='font-weight:bold'> Total </th>
+                            <th style='font-weight:bold; text-indent:20px'>", $total , "</th>
                           </tr>
                     </table>";
                   } else {
