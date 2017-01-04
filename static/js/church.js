@@ -45,14 +45,14 @@ function getscoreandgrade(ts, cs, es, gr, re) {
     re.value = remark;
 }
 
-function getstudent(value) {
-//    alert(value);
+function get_fullname(value) {
+    // alert(value);
     $.ajax({
         type: "GET",
-        url: "select_data.php",
+        url: "get_full_name.php",
         data: "choice="+value,
         success: function(data){
-            $('#second_choice').html(data);
+            $('#fname').val(data);
         }
     })
 }

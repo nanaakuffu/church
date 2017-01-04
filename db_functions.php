@@ -241,9 +241,18 @@
       }
     }
 
-    function view_array_data()
+    function data_exists($connection, $tablename, $field, $value)
     {
-      # code...
+      $sql = "SELECT $field FROM $tablename WHERE $field="."'".$value."'";
+
+      $result = mysqli_query($connection, $sql);
+      $users = mysqli_num_rows($result);
+
+      if ($users > 0) {
+        return TRUE;
+      } else {
+        return FALSE;
+      }
     }
 
     function create_data_array($connection, $table_name, $field_name, $distinct = FALSE, $sorted = FALSE)
@@ -312,7 +321,7 @@
       }
     }
 
-    function data_exists($connection, $table_name, $fields, $criteria)
+    function multiple_data_exists($connection, $table_name, $fields, $criteria)
     {
 
         $field_list = implode(",", $fields);

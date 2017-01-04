@@ -22,7 +22,7 @@
   $db = new Database();
   $con = $db->connect_to_db();
 
-  $status_array = array("NS", "UG", "UPS");
+  $status_array = $db->create_data_array($con, 'status', 'status_name');
 
   if (isset($_GET['c_id'])) {
     $ch_id = decrypt_data($_GET['c_id']);

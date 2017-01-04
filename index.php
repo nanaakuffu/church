@@ -4,7 +4,7 @@
     require_once 'global_functions.php';
     require_once 'db_functions.php';
 
-    // login_check();
+    login_check();
 
     base_header('Home | Welcome to ...');
     create_header();

@@ -77,10 +77,10 @@
                                 echo "<li class='divider'></li>";
                             // }
                       echo "<li>
-                                <a href='add_scores.php'><i class='fa fa-fw fa-plus'></i> Add Tithe Payments </a>
+                                <a href='tithe_page.php'><i class='fa fa-fw fa-plus'></i> Add Tithe Payments </a>
                             </li>
                             <li>
-                                <a href='teachers_view.php'><i class='fa fa-fw fa-desktop'></i> View Tithe Payments </a>
+                                <a href='#'><i class='fa fa-fw fa-desktop'></i> View Tithe Payments </a>
                             </li>";
                             // if ( $_SESSION['is_admin'] == 1 or $_SESSION['is_head'] == 1 or $_SESSION['is_form_teacher'] == 1 ) {
                             //   echo "<li><a href='view_class_scores.php'><i class='fa fa-fw fa-desktop'></i> View Student Scores </a></li>";
@@ -92,7 +92,7 @@
                         <ul class='dropdown-menu'>
                             <li>";
                             // if ($_SESSION['is_admin'] == 1 or $_SESSION['is_head'] == 1) {
-                                echo "<a href='users_page.php'><i class='fa fa-fw fa-user'></i> Add New User </a>";
+                                echo "<a href='add_user.php'><i class='fa fa-fw fa-user'></i> Add New User </a>";
                             // }
                       echo "</li>
                             <li>";
@@ -102,7 +102,7 @@
                             // }
                       echo "</li>
                             <li>
-                                <a href='settings.php'><i class='fa fa-fw fa-plus-square'></i> Add New Member Status </a>
+                                <a href='save_aux.php'><i class='fa fa-fw fa-plus-square'></i> Add New Member Status </a>
                             </li>
                             <li>
                                 <a href='change_password.php'><i class='fa fa-fw fa-key'></i> Change Password </a>
@@ -110,10 +110,10 @@
                         </ul>
                     </li>
                     <li>
-                        <a href='users_update.php?str_1={$user}&up={$up_2}'><span class='glyphicon glyphicon-user'></span> $full_name </a>
+                        <a href='users_page.php?u_id={$user}&up_user={$up_2}'><span class='glyphicon glyphicon-user'></span> $full_name </a>
                     </li>
                     <li>
-                        <a href='log_out.php'> Log Out <i class='fa fa-sign-out fa-fw'></i> </a>
+                        <a href='logout.php'> Log Out <i class='fa fa-sign-out fa-fw'></i> </a>
                     </li>
                 </ul>
                 </div>
@@ -127,7 +127,7 @@
       echo "    <script src='static/js/jquery.js'></script>
                 <script src='static/js/jquery-3.1.1.min.js'></script>
                 <script src='static/js/bootstrap.min.js'></script>
-                <script src='static/js/dia.js'></script>
+                <script src='static/js/church.js'></script>
             </body>
             </html>";
     }
@@ -236,7 +236,25 @@
         $i += 1;
       }
 
-      return $encrypted;
+      return strrev($encrypted);
+    }
+
+    function decryption($string, $key)
+    {
+      // Start decryting reversing the given string
+      $crypt_data = strrev($string);
+      $key_len = strlen($key);
+      $decrypted = "";
+      $i = 0;
+      // Use a loop to get the number of places it should go until you get the full string decrypted
+      while ($i < strlen($crypt_data)) {
+        $chr_count = intval(substr($crypt_data, $i, 1));
+        $new_chr = intval(substr($crypt_data, $i+1, $chr_count)) - $key_len;
+        $decrypted .= chr($new_chr);
+        $i += $chr_count + 1;
+      }
+
+      return $decrypted;
     }
 
     function decrypt_data($string)
@@ -363,7 +381,7 @@
 
       // When the session expires
       if ( (time() - $_SESSION['login_time']) > 1440 ) {
-        include_once 'log_out.php';
+        include_once 'logout.php';
         exit();
       }
     }
