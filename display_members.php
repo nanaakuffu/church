@@ -5,7 +5,7 @@
     require_once("global_vars.php");
     require_once("global_functions.php");
 
-    // login_check();
+    login_check();
 
     $db = new Database();
 

@@ -48,6 +48,15 @@
 ?>
 <br/>
   <div class="container">
+    <?php
+      if (isset($_SESSION['message'])) {
+       echo "<div class='panel panel-default'>
+               <div class='panel-heading'>Input Error(s)</div>
+               <div class='panel-body'><ul class='fa-ul'>", $_SESSION['message'], "</ul></div>
+             </div>";
+       unset($_SESSION['message']);
+     }
+    ?>
     <div class='w3-container w3-blue'>
         <h3> <?php echo $title_bar ?> </h3>
     </div>
@@ -91,6 +100,7 @@
   </div>
 
 <?php
-      $db->close_connection($con);
+      // $db->close_connection($con);
+      unset($_SESSION['id']);
       create_footer();
 ?>

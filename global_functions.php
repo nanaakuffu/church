@@ -77,10 +77,10 @@
                                 echo "<li class='divider'></li>";
                             // }
                       echo "<li>
-                                <a href='tithe_page.php'><i class='fa fa-fw fa-plus'></i> Add Tithe Payments </a>
+                                <a href='pay_tithe.php'><i class='fa fa-fw fa-plus'></i> Add Tithe Payments </a>
                             </li>
                             <li>
-                                <a href='#'><i class='fa fa-fw fa-desktop'></i> View Tithe Payments </a>
+                                <a href='view_tithe.php'><i class='fa fa-fw fa-desktop'></i> View Tithe Payments </a>
                             </li>";
                             // if ( $_SESSION['is_admin'] == 1 or $_SESSION['is_head'] == 1 or $_SESSION['is_form_teacher'] == 1 ) {
                             //   echo "<li><a href='view_class_scores.php'><i class='fa fa-fw fa-desktop'></i> View Student Scores </a></li>";

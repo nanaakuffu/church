@@ -12,6 +12,7 @@
   } else {
       $month_days = array("4", "6", "9", "11");         // An array to hold the 30-day months
       $errors = [];
+      $new_time_stamp = strtotime($_POST['birth_year']."/".$_POST['birth_month']."/".$_POST['birth_day']);
       foreach($_POST as $field => $value) {
          /* Checking for empty data */
          if (empty($_POST[$field])) {
@@ -64,6 +65,7 @@
             $error_message .= "<li><i class='fa-li fa fa-check-square'></i>".$value." Please try again </li>";
           }
           $_SESSION['message'] = $error_message;
+          $_POST['date_of_birth'] = date("Y-m-d", $new_time_stamp);
           include_once "member_page.php";
           exit();
         } else {

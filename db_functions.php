@@ -75,7 +75,7 @@
       $values = implode('","', $value_array);
       $query = "INSERT INTO $table_name ($fields) VALUES (\"$values\")";
 
-      if ($result = mysqli_query($connection, $query))
+      if ($result = mysqli_query($connection, $query) or die("Couldn't execute query!<br>"."Reason:".mysql_error()))
         return TRUE;
       else
         return FALSE;

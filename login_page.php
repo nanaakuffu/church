@@ -41,7 +41,7 @@
     <br />
   </div>
 </div>
-<hr>";
+<hr>
 
 <?php
   create_footer();
