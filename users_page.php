@@ -30,8 +30,13 @@
 
   // Get deafult values
   $user_name = (isset($_POST['submit'])) ? $_POST['user_name'] : "" ;
-  $user_password = (isset($_POST['submit'])) ? decrypt_data($_POST['user_password']) : "" ;
+  $user_password = (isset($_POST['submit'])) ? decryption($_POST['user_password'], $_POST['full_name']) : "" ;
   $full_name = (isset($_POST['submit'])) ? $_POST['full_name'] : "" ;
+
+  // echo decryption($_POST['user_password'], $_POST['full_name']), "<br />";
+  // echo decryption("02202134313131393135313531371132313", $_POST['full_name']), "<br>";
+  // echo $_POST['full_name'], "<br>";
+  // echo $user_password;
 
   $button = (isset($_SESSION['update_user'])) ? "Update User Details" : "Add New User" ;
   $title_bar = (isset($_SESSION['update_user'])) ? "Update User Details" : "Add User Details" ;
@@ -56,13 +61,13 @@
         <div class="col-sm-4">
           <div class='form-group'>
               <label> User Name: </label>
-              <input class='form-control' type='text' name='user_name' value='<?php echo $user_name ?>'
-                       id='uname' placeholder='Enter User Name' <?php echo $buttton_ctr ?>>
+              <input class='form-control' type='text' name='user_name' value='<?php echo $user_name; ?>'
+                       id='uname' placeholder='Enter User Name' <?php echo $buttton_ctr; ?>>
           </div>
           <div class='form-group'>
               <label> User Password: </label>
-              <input class='form-control' type='password' name='user_password' value='<?php echo $user_password ?>'
-                       id='upass' placeholder='Enter Password' <?php echo $buttton_ctr ?>>
+              <input class='form-control' type='password' name='user_password' value='<?php echo trim($user_password); ?>'
+                       id='upass' placeholder='Enter Password' <?php echo $buttton_ctr; ?>>
           </div>
         </div>
         <div class="col-sm-6">

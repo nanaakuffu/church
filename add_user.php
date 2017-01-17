@@ -69,7 +69,9 @@
                 $save_data = $db->add_new($con, $_POST, "users");
 
                 if ($save_data) {
-                  include_once "users_page.php";  // If saving was possible open the student page for another entry
+                  // If saving was possible try to set the access level
+                  $_SESSION['new_user'] = $_POST['user_name'];
+                  include_once 'user_query.php';
                 } else {
                   $_SESSION['message'] = "<li><i class='fa-li fa fa-check-square'></i> ".SAVE_ERROR."</li>"; // Saving was not possible
                   include_once "users_page.php";
@@ -82,8 +84,9 @@
 
             case 'Update User Details':
               // Encyprt the password being sent to the databse
-              $_POST['user_password'] = encryption($_POST['user_password'], $_SESSION['full_name']);
-              $_POST['edited_by'] = $_SESSION['full_name'];
+              $_POST['user_password'] = encryption($_POST['user_password'], $_POST['full_name']);
+              $_POST['edited_by'] = $_POST['full_name'];
+              $_SESSION['full_name'] = $_POST['full_name'];
 
               /* Removes unwanted field names that came from the form */
               $_POST = filter_array($_POST, $field_names_array);
@@ -91,9 +94,8 @@
               // Update the data
               $save_data = $db->update_data($con, $_POST, "users", "user_name", $_POST['user_name']);
 
-              $_SESSION['full_name'] = $_POST['full_name'];
               unset($_SESSION['update_user']);
-              // unset($_SESSION['id']);
+              unset($_SESSION['id']);
 
               header("Location: index.php");
               break;

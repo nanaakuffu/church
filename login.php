@@ -9,7 +9,8 @@
         // Connect to database and get user access levels as he/she logs in
         $db = new Database();
         $con = $db->connect_to_db();
-        // $user_array = $db->get_user_priveleges($con, $_POST['user_name']);
+
+        $user_array = $db->get_user_priveleges($con, $_POST['user_name']);
 
         $user_sql = "SELECT user_name, full_name FROM users WHERE user_name = "."'".$_POST['user_name']."'";
 
@@ -23,23 +24,17 @@
         if ($num > 0) {   // user name was found
           $key = $full_rows[0]['full_name'];
           $password = encryption($_POST['user_pass_word'], $key);
-          $pass_sql = "SELECT user_name, full_name FROM users WHERE user_name="."'".$_POST['user_name']."'". " AND user_password=". "'".$password."'";
+          $pass_sql = "SELECT * FROM users WHERE user_name="."'".$_POST['user_name']."'"." AND user_password=". "'".$password."'";
           $pass_result = mysqli_query($con, $pass_sql) or die("Couldn't execute query 2.");
           $num_available = mysqli_num_rows($pass_result);
 
-          while($record = mysqli_fetch_assoc($pass_result)){
-            $rows[] = $record;
-          }
-
           if ($num_available > 0) { // Password did match
-                $full_name = $rows[0]['full_name'];
 
-                // $_SESSION = $user_array;
+                $_SESSION = $user_array;
                 $user_name = $_POST['user_name'];
                 $_SESSION['user_name'] = $user_name;
-                $_SESSION['full_name'] = $full_name;
+                $_SESSION['full_name'] = $key;
                 $_SESSION['auth'] = 'yes';
-                // $_SESSION['initials'] = $rows[0]['user_initials'];
 
                 $today_date = date('y-m-d');
                 $today_time = date('h:i:s');
@@ -47,13 +42,10 @@
                 $_SESSION['log_id'] = $log_id;
                 $_SESSION['login_time'] = time();
 
-                $log_sql = "INSERT INTO login_details (login_id, user_name, login_date, login_time, logout_date, logout_time)";
-                $log_sql .= " VALUES ('$log_id','$user_name', '$today_date', '$today_time', ' ', ' ')";
-                $result = mysqli_query($con, $log_sql) or die("Can't execute insert query.");
-
-                // // Put the user online or login
-                // $status_sql = "UPDATE users SET status='1' WHERE user_name="."'".$user_name."'";
-                // $status_result = mysqli_query($con, $status_sql);
+                // Create an array with the variables available
+                $log_array = array('login_id'=>$log_id, 'user_name'=>$user_name, 'login_date'=>$today_date, 'login_time'=>$today_time);
+                // Update login Details
+                $result = $db->add_new($con, $log_array, 'login_details');
 
                 $db->close_connection($con);
                 header("Location: index.php");

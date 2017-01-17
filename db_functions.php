@@ -127,7 +127,7 @@
       $fields = implode(",", $field_list);
       $query = (strlen($order_field) > 0) ? "SELECT $fields FROM $table_name ORDER BY $order_field ASC" : "SELECT $fields FROM $table_name" ;
 
-      $result = mysqli_query($connection, $query);
+      $result = mysqli_query($connection, $query) or die("Could not execute query.");
       $records = mysqli_num_rows($result);
       $rows = array();
 

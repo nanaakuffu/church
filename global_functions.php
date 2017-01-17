@@ -71,42 +71,47 @@
                     <li class='dropdown'>
                         <a href='#' class='dropdown-toggle' data-toggle='dropdown'><i class='fa fa-graduation-cap fa-fw'></i> Members <b class='glyphicon glyphicon-menu-down'></b></a>
                         <ul class='dropdown-menu'>";
-                            // if ($_SESSION['is_admin'] == 1 or $_SESSION['is_head'] == 1 or $_SESSION['is_form_teacher'] == 1) {
-                                echo "<li><a href='add_member.php'><i class='fa fa-fw fa-user-md'></i> Add New Member </a></li>";
-                                echo "<li><a href='display_members.php'><i class='fa fa-fw fa-edit'></i> View and Edit Members </a></li>";
-                                echo "<li class='divider'></li>";
-                            // }
-                      echo "<li>
-                                <a href='pay_tithe.php'><i class='fa fa-fw fa-plus'></i> Add Tithe Payments </a>
-                            </li>
-                            <li>
-                                <a href='view_tithe.php'><i class='fa fa-fw fa-desktop'></i> View Tithe Payments </a>
-                            </li>";
-                            // if ( $_SESSION['is_admin'] == 1 or $_SESSION['is_head'] == 1 or $_SESSION['is_form_teacher'] == 1 ) {
-                            //   echo "<li><a href='view_class_scores.php'><i class='fa fa-fw fa-desktop'></i> View Student Scores </a></li>";
-                            // }
+                            if ($_SESSION['is_admin'] == 1 or $_SESSION['can_add_member'] == 1) {
+                              echo "<li><a href='add_member.php'><i class='fa fa-fw fa-user-md'></i> Add New Member </a></li>";
+                            }
+                            if ($_SESSION['is_admin'] == 1 or $_SESSION['can_edit_member'] == 1) {
+                              echo "<li><a href='display_members.php'><i class='fa fa-fw fa-edit'></i> View and Edit Members </a></li>";
+                            }
+
+                            if ($_SESSION['is_admin'] == 1 or $_SESSION['can_add_attendance'] == 1) {
+                              echo "<li class='divider'></li>";
+                              echo "<li><a href='#'><i class='fa fa-fw fa-user-md'></i> Add Attendance </a></li>";
+                            }
+                            if ($_SESSION['is_admin'] == 1 or $_SESSION['can_edit_attendance'] == 1) {
+                              echo "<li><a href='#'><i class='fa fa-fw fa-edit'></i> View and Edit Attendance </a></li>";
+                            }
+
+                            if ($_SESSION['is_admin'] == 1 or $_SESSION['can_add_tithe'] == 1) {
+                              echo "<li class='divider'></li>";
+                              echo "<li><a href='pay_tithe.php'><i class='fa fa-fw fa-plus'></i> Add Tithe Payments </a></li>";
+                            }
+                            if ($_SESSION['is_admin'] == 1 or $_SESSION['can_edit_tithe'] == 1) {
+                              echo "<li><a href='view_tithe.php'><i class='fa fa-fw fa-desktop'></i> View Tithe Payments </a></li>";
+                            }
                   echo "</ul>
                     </li>
                     <li class='dropdown'>
                         <a href='#' class='dropdown-toggle' data-toggle='dropdown'><i class='fa fa-fw fa-gears'></i> Settings <b class='glyphicon glyphicon-menu-down'></b></a>
-                        <ul class='dropdown-menu'>
-                            <li>";
-                            // if ($_SESSION['is_admin'] == 1 or $_SESSION['is_head'] == 1) {
-                                echo "<a href='add_user.php'><i class='fa fa-fw fa-user'></i> Add New User </a>";
-                            // }
-                      echo "</li>
-                            <li>";
-                            // if ($_SESSION['is_admin'] == 1) {
-                                echo "<a href='display_users.php'><i class='fa fa-fw fa-edit'></i> Set User Priveleges </a>";
-                                echo "<a href='down_page.php'><i class='fa fa-fw fa-database'></i> Back Up Database </a>";
-                            // }
-                      echo "</li>
-                            <li>
-                                <a href='save_aux.php'><i class='fa fa-fw fa-plus-square'></i> Add New Member Status </a>
-                            </li>
-                            <li>
-                                <a href='change_password.php'><i class='fa fa-fw fa-key'></i> Change Password </a>
-                            </li>
+                        <ul class='dropdown-menu'>";
+                            if ($_SESSION['is_admin'] or $_SESSION['can_create_user']) {
+                                echo "<li><a href='add_user.php'><i class='fa fa-fw fa-user'></i> Add New User </a></li>";
+                            }
+                            if ($_SESSION['is_admin'] or $_SESSION['can_set_user_privelege']) {
+                                echo "<li><a href='display_users.php'><i class='fa fa-fw fa-edit'></i> Set User Priveleges </a></li>";
+                            }
+                            if ($_SESSION['is_admin'] or $_SESSION['can_backup_data']) {
+                                echo "<li><a href='down_page.php'><i class='fa fa-fw fa-database'></i> Back Up Database </a></li>";
+                            }
+                            if ($_SESSION['is_admin'] or $_SESSION['can_add_member'] or $_SESSION['can_edit_member']) {
+                              echo "<li><a href='save_aux.php'><i class='fa fa-fw fa-plus-square'></i> Add New Member Status </a></li>";
+                            }
+
+                      echo  "<li><a href='change_password.php'><i class='fa fa-fw fa-key'></i> Change Password </a></li>
                         </ul>
                     </li>
                     <li>
@@ -402,6 +407,11 @@
         }
         return $month_name;
       }
+    }
+
+    function update_password($old_password, $new_key)
+    {
+      return encryption('old_password', $new_key);
     }
 
 ?>
