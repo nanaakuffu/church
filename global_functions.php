@@ -127,6 +127,17 @@
         </nav>";
     }
 
+    function get_checked($value)
+    {
+      $checked = "";
+      if ($value) {
+        $checked = "checked";
+        return $checked;
+      } else {
+        return $checked;
+      }
+    }
+
     function create_footer()
     {
       echo "    <script src='static/js/jquery.js'></script>
